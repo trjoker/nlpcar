@@ -50,10 +50,12 @@ def get_data():
     test_data = parallelize(test_data, data_frame_proc)
 
     # 保存
+    print(train_data.info())
+    print(test_data.info())
     print('保存')
     train_data.to_csv(config.train_seg_path, index=None, header=True)
     test_data.to_csv(config.test_seg_path, index=None, header=True)
-
+    
     # 拼接
     print('拼接')
     train_data['merged'] = train_data[['Question', 'Dialogue', 'Report']].apply(
@@ -82,5 +84,11 @@ def get_vocab():
 
 if __name__ == '__main__':
     # train_data, test_data = get_data_frame(config.train_data_path, config.test_data_path)
-    # get_data()
-    get_vocab()
+    train_data, test_data, merged_df=get_data()
+    print(train_data.info())
+    print(test_data.info())
+    train_data2 =pd.read_csv(config.train_seg_path, encoding="UTF-8")
+    test_data2 =pd.read_csv(config.test_seg_path, encoding="UTF-8")
+    print(train_data2.info())
+    print(test_data2.info())
+    # get_vocab()
